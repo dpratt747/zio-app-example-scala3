@@ -29,7 +29,5 @@ final case class UserProgram(
 }
 
 object UserProgram {
-  val live: ZLayer[UserServiceAlg, Nothing, UserProgramAlg] = ZLayer.fromFunction(
-    (userService: UserServiceAlg) => UserProgram.apply(userService)
-  )
+  val layer: ZLayer[UserServiceAlg, Nothing, UserProgramAlg] = ZLayer.derive[UserProgram]
 }

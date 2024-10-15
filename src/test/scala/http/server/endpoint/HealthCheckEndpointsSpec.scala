@@ -45,7 +45,7 @@ object HealthCheckEndpointsSpec extends ZIOSpecDefault {
       healthProgramMock(
         getStatusesResponse = ZIO.succeed(Map.empty)
       ),
-      HealthCheckEndpoints.live
+      HealthCheckEndpoints.layer
     )
   )
 
@@ -73,7 +73,7 @@ object HealthCheckEndpointsSpec extends ZIOSpecDefault {
         "dependency" -> "Ok"
       ))
     ),
-    HealthCheckEndpoints.live,
+    HealthCheckEndpoints.layer,
   )
 
 }

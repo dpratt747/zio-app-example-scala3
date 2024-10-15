@@ -116,7 +116,5 @@ final case class UserEndpoints(
 }
 
 object UserEndpoints {
-  val live: ZLayer[UserProgramAlg, Nothing, UserEndpointsAlg] = ZLayer.fromFunction(
-    (userProgram: UserProgramAlg) => UserEndpoints.apply(userProgram)
-  )
+  val layer: ZLayer[UserProgramAlg, Nothing, UserEndpointsAlg] = ZLayer.derive[UserEndpoints]
 }

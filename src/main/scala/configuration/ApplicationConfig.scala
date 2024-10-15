@@ -35,6 +35,5 @@ object ApplicationConfig {
                                 db: DatabaseConfig
                               )
 
-  val live: ZLayer[ConfigProvider, Nothing, ApplicationConfigAlg] =
-    zio.ZLayer.fromFunction((source: ConfigProvider) => ApplicationConfig(source))
+  val layer: ZLayer[ConfigProvider, Nothing, ApplicationConfigAlg] = ZLayer.derive[ApplicationConfig]
 }

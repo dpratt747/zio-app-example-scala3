@@ -58,7 +58,5 @@ final case class HealthCheckEndpoints(
 }
 
 object HealthCheckEndpoints {
-  val live: ZLayer[HealthProgramAlg, Nothing, HealthCheckEndpointsAlg] = ZLayer.fromFunction(
-    (healthProgram: HealthProgramAlg) => HealthCheckEndpoints.apply(healthProgram)
-  )
+  val layer: ZLayer[HealthProgramAlg, Nothing, HealthCheckEndpointsAlg] = ZLayer.derive[HealthCheckEndpoints]
 }

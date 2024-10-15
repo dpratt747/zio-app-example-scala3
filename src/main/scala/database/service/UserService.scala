@@ -52,6 +52,5 @@ final case class UserService(
 }
 
 object UserService {
-  val live: ZLayer[UserRepositoryAlg, Nothing, UserServiceAlg] =
-    ZLayer.fromFunction((userRepository: UserRepositoryAlg) => UserService(userRepository))
+  val layer: ZLayer[UserRepositoryAlg, Nothing, UserServiceAlg] = ZLayer.derive[UserService]
 }

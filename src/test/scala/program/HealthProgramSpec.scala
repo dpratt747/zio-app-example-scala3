@@ -30,7 +30,7 @@ object HealthProgramSpec extends ZIOSpecDefault {
       mockStatusServiceAlg(
         response = ZIO.succeed(true)
       ),
-      HealthProgram.live,
+      HealthProgram.layer,
       ZConnectionPool.h2test
     ),
     test("returns a map with the dependencies statuses - returns Not Ok when the status service returns false") {
@@ -44,7 +44,7 @@ object HealthProgramSpec extends ZIOSpecDefault {
       mockStatusServiceAlg(
         response = ZIO.succeed(false)
       ),
-      HealthProgram.live,
+      HealthProgram.layer,
       ZConnectionPool.h2test
     )
   )

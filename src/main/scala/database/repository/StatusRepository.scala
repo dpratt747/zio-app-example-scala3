@@ -18,5 +18,5 @@ final case class StatusRepository() extends StatusRepositoryAlg {
 }
 
 object StatusRepository {
-  val live: ZLayer[Any, Nothing, StatusRepositoryAlg] = ZLayer.fromFunction(() => StatusRepository.apply())
+  val layer: ZLayer[Any, Nothing, StatusRepositoryAlg] = ZLayer.derive[StatusRepository]
 }

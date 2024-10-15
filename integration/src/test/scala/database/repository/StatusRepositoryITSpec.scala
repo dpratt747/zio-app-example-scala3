@@ -38,7 +38,7 @@ object StatusRepositoryITSpec extends ZIOSpecDefault {
             connectionPoolConfigLayer(postgresContainer),
             ZLayer.succeed(ZConnectionPoolConfig.default),
             Scope.default,
-            StatusRepository.live
+            StatusRepository.layer
           )
         }
       }

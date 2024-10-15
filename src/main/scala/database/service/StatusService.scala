@@ -19,6 +19,5 @@ final case class StatusService(
 }
 
 object StatusService {
-  val live: ZLayer[StatusRepositoryAlg, Nothing, StatusServiceAlg] =
-    ZLayer.fromFunction((repo: StatusRepositoryAlg) => StatusService(repo))
+  val layer: ZLayer[StatusRepositoryAlg, Nothing, StatusServiceAlg] = ZLayer.derive[StatusService]
 }

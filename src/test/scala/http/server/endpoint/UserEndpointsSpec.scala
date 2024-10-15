@@ -69,7 +69,7 @@ object UserEndpointsSpec extends ZIOSpecDefault with Generators {
         getAllUsersResponse = ZIO.succeed(Chunk.empty),
         deleteUserByUsernameResponse = ZIO.unit
       ),
-      UserEndpoints.live,
+      UserEndpoints.layer,
       ZConnectionPool.h2test
     ),
     test("returns 201 when provided the proper payload and is successfully inserted") {
@@ -96,7 +96,7 @@ object UserEndpointsSpec extends ZIOSpecDefault with Generators {
         getAllUsersResponse = ZIO.succeed(Chunk.empty),
         deleteUserByUsernameResponse = ZIO.unit
       ),
-      UserEndpoints.live,
+      UserEndpoints.layer,
       ZConnectionPool.h2test
     ),
     test("returns 500 when the program fibre fails") {
@@ -121,7 +121,7 @@ object UserEndpointsSpec extends ZIOSpecDefault with Generators {
         getAllUsersResponse = ZIO.succeed(Chunk.empty),
         deleteUserByUsernameResponse = ZIO.unit
       ),
-      UserEndpoints.live
+      UserEndpoints.layer
     )
   )
 
@@ -147,7 +147,7 @@ object UserEndpointsSpec extends ZIOSpecDefault with Generators {
         getAllUsersResponse = ZIO.succeed(Chunk.succeed(User("username", "firstname", "lastname", None))),
         deleteUserByUsernameResponse = ZIO.unit
       ),
-      UserEndpoints.live,
+      UserEndpoints.layer,
       ZConnectionPool.h2test
     ),
     test("returns 500 when the program fails") {
@@ -169,7 +169,7 @@ object UserEndpointsSpec extends ZIOSpecDefault with Generators {
         getAllUsersResponse = ZIO.dieMessage("Failed to retrieve all users"),
         deleteUserByUsernameResponse = ZIO.unit
       ),
-      UserEndpoints.live
+      UserEndpoints.layer
     )
   )
 
@@ -197,7 +197,7 @@ object UserEndpointsSpec extends ZIOSpecDefault with Generators {
         getAllUsersResponse = ZIO.succeed(Chunk.succeed(User("username", "firstname", "lastname", None))),
         deleteUserByUsernameResponse = ZIO.unit
       ),
-      UserEndpoints.live,
+      UserEndpoints.layer,
       ZConnectionPool.h2test
     )
   )

@@ -48,7 +48,7 @@ object UserServiceSpec extends ZIOSpecDefault with Generators {
               deleteUserResponse = ZIO.succeed(0L)
             ),
             ZConnectionPool.h2test,
-            database.service.UserService.live
+            database.service.UserService.layer
           )
       }
     },
@@ -68,7 +68,7 @@ object UserServiceSpec extends ZIOSpecDefault with Generators {
               deleteUserResponse = ZIO.succeed(0L)
             ),
             ZConnectionPool.h2test,
-            database.service.UserService.live
+            database.service.UserService.layer
           )
       }
     }
@@ -89,7 +89,7 @@ object UserServiceSpec extends ZIOSpecDefault with Generators {
               deleteUserResponse = ZIO.succeed(0L)
             ),
             ZConnectionPool.h2test,
-            database.service.UserService.live
+            database.service.UserService.layer
           )
       }
     },
@@ -106,7 +106,7 @@ object UserServiceSpec extends ZIOSpecDefault with Generators {
             deleteUserResponse = ZIO.succeed(0L)
           ),
           ZConnectionPool.h2test,
-          database.service.UserService.live
+          database.service.UserService.layer
         )
     }
   )
@@ -123,7 +123,7 @@ object UserServiceSpec extends ZIOSpecDefault with Generators {
             deleteUserResponse = ZIO.succeed(1L)
           ),
           ZConnectionPool.h2test,
-          database.service.UserService.live
+          database.service.UserService.layer
         )
     },
     test("calls UserRepository to delete a user by username - returns failure response") {
@@ -139,7 +139,7 @@ object UserServiceSpec extends ZIOSpecDefault with Generators {
             deleteUserResponse = ZIO.dieMessage("Something went wrong whilst deleting user"),
           ),
           ZConnectionPool.h2test,
-          database.service.UserService.live
+          database.service.UserService.layer
         )
     }
   )

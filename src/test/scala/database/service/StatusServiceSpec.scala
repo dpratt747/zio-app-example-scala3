@@ -30,7 +30,7 @@ object StatusServiceSpec extends ZIOSpecDefault with Generators {
             select1Response = ZIO.succeed(Option(1))
           ),
           ZConnectionPool.h2test,
-          StatusService.live
+          StatusService.layer
         )
     },
     test("returns false when the repository responds with None") {
@@ -42,7 +42,7 @@ object StatusServiceSpec extends ZIOSpecDefault with Generators {
             select1Response = ZIO.none
           ),
           ZConnectionPool.h2test,
-          StatusService.live
+          StatusService.layer
         )
     }
   )

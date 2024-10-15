@@ -22,7 +22,7 @@ object ApplicationConfigSpec extends ZIOSpecDefault {
           config.database == "zio-app-example"
         ))
           .provide(
-            ApplicationConfig.live,
+            ApplicationConfig.layer,
             ZLayer.succeed(TypesafeConfigProvider.fromResourcePath())
           )
       },
@@ -54,7 +54,7 @@ object ApplicationConfigSpec extends ZIOSpecDefault {
           config.database == "some_db"
         ))
           .provide(
-            ApplicationConfig.live,
+            ApplicationConfig.layer,
             ZLayer.succeed(validConfig)
           )
       }

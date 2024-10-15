@@ -44,7 +44,7 @@ object UserProgramSpec extends ZIOSpecDefault with Generators {
         getUsersResponse = ZIO.succeed(Chunk.empty),
         deleteUserByUsernameResponse = ZIO.unit
       ),
-      UserProgram.live,
+      UserProgram.layer,
       ZConnectionPool.h2test
     ),
     test("returns database service error when the insertion is not successful due to a username duplication error") {
@@ -62,7 +62,7 @@ object UserProgramSpec extends ZIOSpecDefault with Generators {
         getUsersResponse = ZIO.succeed(Chunk.empty),
         deleteUserByUsernameResponse = ZIO.unit
       ),
-      UserProgram.live,
+      UserProgram.layer,
       ZConnectionPool.h2test
     )
   )
@@ -83,7 +83,7 @@ object UserProgramSpec extends ZIOSpecDefault with Generators {
         )),
         deleteUserByUsernameResponse = ZIO.unit
       ),
-      UserProgram.live,
+      UserProgram.layer,
       ZConnectionPool.h2test
     )
   )
@@ -101,7 +101,7 @@ object UserProgramSpec extends ZIOSpecDefault with Generators {
         getUsersResponse = ZIO.succeed(Chunk.empty),
         deleteUserByUsernameResponse = ZIO.unit
       ),
-      UserProgram.live,
+      UserProgram.layer,
       ZConnectionPool.h2test
     ),
     test("returns database service error when the insertion is not successful due to a database transaction error") {
@@ -116,7 +116,7 @@ object UserProgramSpec extends ZIOSpecDefault with Generators {
         getUsersResponse = ZIO.succeed(Chunk.empty),
         deleteUserByUsernameResponse = ZIO.fail(DatabaseTransactionError("issue with transaction"))
       ),
-      UserProgram.live,
+      UserProgram.layer,
       ZConnectionPool.h2test
     )
   )

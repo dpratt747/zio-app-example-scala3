@@ -43,8 +43,8 @@ object UserServiceITSpec extends ZIOSpecDefault {
           connectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
-          UserRepository.live,
-          UserService.live
+          UserRepository.layer,
+          UserService.layer
         )
       }
     },
@@ -64,8 +64,8 @@ object UserServiceITSpec extends ZIOSpecDefault {
           connectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
-          UserRepository.live,
-          UserService.live
+          UserRepository.layer,
+          UserService.layer
         )
       }
     }
@@ -92,8 +92,8 @@ object UserServiceITSpec extends ZIOSpecDefault {
           connectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
-          UserRepository.live,
-          UserService.live
+          UserRepository.layer,
+          UserService.layer
         )
       }
     }
@@ -116,8 +116,8 @@ object UserServiceITSpec extends ZIOSpecDefault {
           connectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
-          UserRepository.live,
-          UserService.live
+          UserRepository.layer,
+          UserService.layer
         )
       }
     }

@@ -55,17 +55,17 @@ object Main extends ZIOAppDefault {
           user = appConfig.db.user,
           password = appConfig.db.password
         ),
-        StatusRepository.live,
-        UserRepository.live,
-        StatusService.live,
-        UserService.live,
-        HealthProgram.live,
-        UserProgram.live,
-        HealthCheckEndpoints.live,
-        UserEndpoints.live
+        StatusRepository.layer,
+        UserRepository.layer,
+        StatusService.layer,
+        UserService.layer,
+        HealthProgram.layer,
+        UserProgram.layer,
+        HealthCheckEndpoints.layer,
+        UserEndpoints.layer
       )
     }.provide(
       ZLayer.succeed(TypesafeConfigProvider.fromResourcePath()),
-      ApplicationConfig.live
+      ApplicationConfig.layer
   )
 }

@@ -23,7 +23,5 @@ final case class HealthProgram(
 }
 
 object HealthProgram {
-  val live: ZLayer[StatusServiceAlg, Nothing, HealthProgramAlg] = ZLayer.fromFunction(
-    (statusService: StatusServiceAlg) => HealthProgram.apply(statusService)
-  )
+  val layer: ZLayer[StatusServiceAlg, Nothing, HealthProgramAlg] = ZLayer.derive[HealthProgram]
 }
