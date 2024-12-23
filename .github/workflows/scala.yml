@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   build:
-
+    name: scala tests
     runs-on: ubuntu-latest
 
     steps:
