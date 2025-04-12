@@ -5,7 +5,7 @@ ThisBuild / organizationName := "dpratt747"
 
 lazy val zioVersion = "2.1.17"
 lazy val zioHttpVersion = "3.0.1"
-lazy val zioJsonVersion = "0.7.41"
+lazy val zioJsonVersion = "0.7.42"
 lazy val zioJdbcVersion = "0.1.2"
 lazy val zioConfigVersion = "4.0.4"
 lazy val testContainerScalaVersion = "0.43.0"
