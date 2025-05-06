@@ -13,7 +13,7 @@ lazy val postgresDriverVersion = "42.7.5"
 lazy val flywayVersion = "11.8.0"
 lazy val h2Version = "2.3.232"
 lazy val chimneyVersion = "1.7.3"
-lazy val ironVersion = "3.0.0"
+lazy val ironVersion = "3.0.1"
 lazy val izumiReflectVersion = "3.0.2"
 
 lazy val root = (project in file("."))
