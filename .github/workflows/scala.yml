@@ -31,7 +31,12 @@ jobs:
         cache: 'sbt'
     - name: Start Docker
       run: |
-        sudo systemctl start docker
+        sudo nohup dockerd --host=unix:///var/run/docker.sock --tls=false \
+         > /tmp/dockerd.log 2>&1 &
+        sleep 10
+        echo "=== DOCKERD LOG ==="
+        tail -n 50 /tmp/dockerd.log
+        echo "=== DOCKER INFO ==="
         docker info
     - name: Run tests
       run: sbt test
