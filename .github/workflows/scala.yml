@@ -29,11 +29,10 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: 'sbt'
-    - name: Allow runner to access Docker
-      run: | 
-        sudo usermod -aG docker $USER
-        newgrp docker
-        docker info
+    - name: Configure Testcontainers for CI
+      run: |
+        echo "TESTCONTAINERS_RYUK_DISABLED=true" >> $GITHUB_ENV
+        echo "TESTCONTAINERS_CHECKS_DISABLE=true" >> $GITHUB_ENV
     - name: Run tests
       run: sbt test
     - name: Run integration tests
