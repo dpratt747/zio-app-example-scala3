@@ -29,10 +29,8 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: 'sbt'
-    - name: Configure Testcontainers for CI
-      run: |
-        echo "TESTCONTAINERS_RYUK_DISABLED=true" >> $GITHUB_ENV
-        echo "TESTCONTAINERS_CHECKS_DISABLE=true" >> $GITHUB_ENV
+    - name: Print Docker API Version
+      run: docker version --format '{{.Server.APIVersion}}'
     - name: Run tests
       run: sbt test
     - name: Run integration tests
