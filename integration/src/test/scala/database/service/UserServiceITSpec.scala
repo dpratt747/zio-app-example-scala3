@@ -1,25 +1,14 @@
 package database.service
 
-import database.repository.StatusRepositoryITSpec.{suite, test}
 import database.repository.UserRepository
-import database.util.ZConnectionPoolWrapper
+import domain.User
 import domain.error.{UserAlreadyDeletedError, UserNotFoundError, UsernameDuplicateError}
-import domain.{PortDetails, User}
-import org.testcontainers.containers
-import util.{FlywayResource, TestContainerResource}
+import util.{ConnectionPoolConfigLayer, FlywayResource, TestContainerResource}
 import zio.jdbc.ZConnectionPoolConfig
 import zio.test.{Spec, TestAspect, TestEnvironment, ZIOSpecDefault, assertTrue}
 import zio.{Scope, ZIO, ZLayer}
 
 object UserServiceITSpec extends ZIOSpecDefault {
-  
-  private def connectionPoolConfigLayer(postgresContainer: containers.PostgreSQLContainer[?]) = ZConnectionPoolWrapper.connectionPool(
-    postgresContainer.getHost,
-    postgresContainer.getMappedPort(PortDetails.PostgresPort.port),
-    postgresContainer.getDatabaseName,
-    postgresContainer.getUsername,
-    postgresContainer.getPassword
-  )
 
   override def spec: Spec[TestEnvironment & Scope, Any] = suite("UserService")(
     insertUserTests,
@@ -39,7 +28,7 @@ object UserServiceITSpec extends ZIOSpecDefault {
           validationResult.validationSuccessful,
           res == 1L
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer,
@@ -60,7 +49,7 @@ object UserServiceITSpec extends ZIOSpecDefault {
           validationResult.validationSuccessful,
           error.isInstanceOf[UsernameDuplicateError]
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer,
@@ -88,7 +77,7 @@ object UserServiceITSpec extends ZIOSpecDefault {
           validationResult.validationSuccessful,
           res.length == 3
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer,
@@ -117,7 +106,7 @@ object UserServiceITSpec extends ZIOSpecDefault {
           validationResult.validationSuccessful,
           res.length == 2
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer,
@@ -141,7 +130,7 @@ object UserServiceITSpec extends ZIOSpecDefault {
           validationResult.validationSuccessful,
           res == ()
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer,
@@ -160,7 +149,7 @@ object UserServiceITSpec extends ZIOSpecDefault {
           validationResult.validationSuccessful,
           res == UserNotFoundError("Unable to delete this user as the username does not exist")
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer,
@@ -182,7 +171,7 @@ object UserServiceITSpec extends ZIOSpecDefault {
           validationResult.validationSuccessful,
           failure.isInstanceOf[UserAlreadyDeletedError]
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer,

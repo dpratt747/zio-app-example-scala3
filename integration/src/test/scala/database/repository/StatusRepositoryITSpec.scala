@@ -1,23 +1,12 @@
 package database.repository
 
 import _root_.util.*
-import database.util.ZConnectionPoolWrapper
-import domain.PortDetails
 import org.flywaydb.core.api.output.ValidateResult
-import org.testcontainers.containers
 import zio.*
 import zio.jdbc.*
 import zio.test.*
 
 object StatusRepositoryITSpec extends ZIOSpecDefault {
-
-  private def connectionPoolConfigLayer(postgresContainer: containers.PostgreSQLContainer[?]) = ZConnectionPoolWrapper.connectionPool(
-    postgresContainer.getHost,
-    postgresContainer.getMappedPort(PortDetails.PostgresPort.port),
-    postgresContainer.getDatabaseName,
-    postgresContainer.getUsername,
-    postgresContainer.getPassword
-  )
 
   override def spec: Spec[TestEnvironment & Scope, Throwable] =
     suite("StatusRepository")(
@@ -34,7 +23,7 @@ object StatusRepositoryITSpec extends ZIOSpecDefault {
             validationResult.validationSuccessful,
             underTest.contains(1)
           )).provide(
-            connectionPoolConfigLayer(postgresContainer),
+            ConnectionPoolConfigLayer(postgresContainer),
             ZLayer.succeed(ZConnectionPoolConfig.default),
             Scope.default,
             StatusRepository.layer

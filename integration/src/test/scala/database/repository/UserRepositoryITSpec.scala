@@ -2,24 +2,14 @@ package database.repository
 
 import _root_.util.*
 import database.schema.UserTableRow
-import database.util.ZConnectionPoolWrapper
-import domain.{PortDetails, User}
+import domain.User
 import org.flywaydb.core.api.output.ValidateResult
 import org.postgresql.util.PSQLException
-import org.testcontainers.containers
 import zio.*
 import zio.jdbc.*
 import zio.test.*
 
 object UserRepositoryITSpec extends ZIOSpecDefault {
-
-  private def connectionPoolConfigLayer(postgresContainer: containers.PostgreSQLContainer[?]) = ZConnectionPoolWrapper.connectionPool(
-    postgresContainer.getHost,
-    postgresContainer.getMappedPort(PortDetails.PostgresPort.port),
-    postgresContainer.getDatabaseName,
-    postgresContainer.getUsername,
-    postgresContainer.getPassword
-  )
 
   override def spec: Spec[TestEnvironment & Scope, Any] = suite("UserRepository")(
     insertUserTest,
@@ -45,7 +35,7 @@ object UserRepositoryITSpec extends ZIOSpecDefault {
           validationResult.validationSuccessful,
           underTest.length == 3
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer
@@ -74,7 +64,7 @@ object UserRepositoryITSpec extends ZIOSpecDefault {
           validationResult.validationSuccessful,
           all.length == 2
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer
@@ -110,7 +100,7 @@ object UserRepositoryITSpec extends ZIOSpecDefault {
             case _ => false
           }
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer
@@ -143,7 +133,7 @@ object UserRepositoryITSpec extends ZIOSpecDefault {
             case _ => false
           }
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer
@@ -174,7 +164,7 @@ object UserRepositoryITSpec extends ZIOSpecDefault {
               userId3.contains(3),
               userId4.contains(4)
             )).provide(
-              connectionPoolConfigLayer(postgresContainer),
+              ConnectionPoolConfigLayer(postgresContainer),
               ZLayer.succeed(ZConnectionPoolConfig.default),
               Scope.default,
               UserRepository.layer
@@ -196,7 +186,7 @@ object UserRepositoryITSpec extends ZIOSpecDefault {
           validationResult.validationSuccessful,
           error.squash.getMessage.contains("ERROR: duplicate key value violates unique constraint \"user_table_user_name_key\"")
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer
@@ -223,7 +213,7 @@ object UserRepositoryITSpec extends ZIOSpecDefault {
           validationResult.validationSuccessful,
           result.isEmpty
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer
@@ -241,7 +231,7 @@ object UserRepositoryITSpec extends ZIOSpecDefault {
           validationResult.validationSuccessful,
           result == 0
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer
@@ -266,7 +256,7 @@ object UserRepositoryITSpec extends ZIOSpecDefault {
           result.asInstanceOf[PSQLException].getSQLState == "23505",
           result.isInstanceOf[PSQLException] // number of records that have been changed
         )).provide(
-          connectionPoolConfigLayer(postgresContainer),
+          ConnectionPoolConfigLayer(postgresContainer),
           ZLayer.succeed(ZConnectionPoolConfig.default),
           Scope.default,
           UserRepository.layer
