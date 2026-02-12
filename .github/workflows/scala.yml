@@ -7,9 +7,9 @@ name: Scala CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ main, master ]
 
 permissions:
   contents: read
@@ -29,6 +29,10 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: 'sbt'
+    - name: Start Docker
+      run: |
+        sudo systemctl start docker
+        docker info
     - name: Run tests
       run: sbt test
     - name: Run integration tests
