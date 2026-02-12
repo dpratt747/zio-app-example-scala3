@@ -29,8 +29,6 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: 'sbt'
-    - name: Print Docker API Version
-      run: docker version --format '{{.Server.APIVersion}}'
     - name: Run tests
       run: sbt test
     - name: Run integration tests
